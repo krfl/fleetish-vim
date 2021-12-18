@@ -13,7 +13,7 @@ let g:colors_name = 'fleetish'
 let g:fleetish_italics = get(g:, 'fleetish_italics', 0)
 
 " Color Palette
-let s:gray1     = '#1f1f1f'
+let s:gray1     = '#0c0c0c'
 let s:gray2     = '#333333'
 let s:gray3     = '#464646'
 let s:gray4     = '#6d6d6d'

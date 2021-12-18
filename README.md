@@ -3,6 +3,10 @@
 ## Fleetish
 A theme based on a screenshot of JetBrains Fleet. May or may not be accurate.
 
+
+![Fleetish](/screenshot.png "Fleetish")
+
+
 ### Installation
 Install this color scheme using your preferred Vim plugin manager, then add the
 following to your (n)vim configuration file:

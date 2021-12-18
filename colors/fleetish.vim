@@ -1,152 +1,186 @@
-" Vim color file
 " fleetish
 " A theme based on a screenshot of JetBrains Fleet. May or may not be accurate
 
-hi clear
+highlight clear
 
-if exists("syntax on")
-syntax reset
+if exists('syntax_on')
+    syntax reset
 endif
 
-set t_Co=256
-let g:colors_name = "fleetish"
+set background=dark
+let g:colors_name = 'fleetish'
 
+let g:fleetish_italics = get(g:, 'fleetish_italics', 0)
 
-" Define reusable colorvariables.
-let s:bg="#0c0c0c"
-let s:fg="#ffffff"
-let s:fg2="#ebebeb"
-let s:fg3="#d6d6d6"
-let s:fg4="#c2c2c2"
-let s:bg2="#1f1f1f"
-let s:bg3="#333333"
-let s:bg4="#464646"
-let s:keyword="#73cfb8"
-let s:builtin="#9a8af9"
-let s:const= "#eaa06d"
-let s:comment="#6d6d6d"
-let s:func="#9a8af9"
-let s:str="#e367db"
-let s:type="#eaa06d"
-let s:var="#ffffff"
-let s:warning="#f14c4c"
-let s:warning2="#ea7620"
+" Color Palette
+let s:gray1     = '#1f1f1f'
+let s:gray2     = '#333333'
+let s:gray3     = '#464646'
+let s:gray4     = '#6d6d6d'
+let s:gray5     = '#c2c2c2'
+let s:red       = '#f14c4c'
+let s:green     = '#15ac91'
+let s:yellow    = '#e5b95c'
+let s:blue      = '#4c9df3'
+let s:purple    = '#9a8af9'
+let s:cyan      = '#75d3ba'
+let s:orange    = '#ea7620'
+let s:pink      = '#e567dc'
 
-exe 'hi Normal guifg='s:fg' guibg='s:bg
-exe 'hi Cursor guifg='s:bg' guibg='s:fg
-exe 'hi CursorLine  guibg='s:bg2
-exe 'hi CursorLineNr guifg='s:str' guibg='s:bg
-exe 'hi CursorColumn  guibg='s:bg2
-exe 'hi ColorColumn  guibg='s:bg2
-exe 'hi LineNr guifg='s:fg2' guibg='s:bg2
-exe 'hi VertSplit guifg='s:fg3' guibg='s:bg3
-exe 'hi MatchParen guifg='s:warning2'  gui=underline'
-exe 'hi StatusLine guifg='s:fg2' guibg='s:bg3' gui=bold'
-exe 'hi Pmenu guifg='s:fg' guibg='s:bg2
-exe 'hi PmenuSel  guibg='s:bg3
-exe 'hi IncSearch guifg='s:bg' guibg='s:keyword
-exe 'hi Search   gui=underline'
-exe 'hi Directory guifg='s:const
-exe 'hi Folded guifg='s:fg4' guibg='s:bg
-exe 'hi WildMenu guifg='s:str' guibg='s:bg
+function! s:HL(group, fg, bg, attr)
+    let l:attr = a:attr
+    if !g:fleetish_italics && l:attr ==# 'italic'
+        let l:attr = 'none'
+    endif
 
-exe 'hi Boolean guifg='s:const
-exe 'hi Character guifg='s:const
-exe 'hi Comment guifg='s:comment
-exe 'hi Conditional guifg='s:keyword
-exe 'hi Constant guifg='s:const
-exe 'hi Todo guibg='s:bg
-exe 'hi Define guifg='s:keyword
-exe 'hi DiffAdd guifg=#fafafa guibg=#123d0f gui=bold'
-exe 'hi DiffDelete guibg='s:bg2
-exe 'hi DiffChange  guibg=#151b3c guifg=#fafafa'
-exe 'hi DiffText guifg=#ffffff guibg=#ff0000 gui=bold'
-exe 'hi ErrorMsg guifg='s:warning' guibg='s:bg2' gui=bold'
-exe 'hi WarningMsg guifg='s:fg' guibg='s:warning2
-exe 'hi Float guifg='s:const
-exe 'hi Function guifg='s:func
-exe 'hi Identifier guifg='s:type'  gui=italic'
-exe 'hi Keyword guifg='s:keyword'  gui=bold'
-exe 'hi Label guifg='s:var
-exe 'hi NonText guifg='s:bg4' guibg='s:bg2
-exe 'hi Number guifg='s:const
-exe 'hi Operator guifg='s:keyword
-exe 'hi PreProc guifg='s:keyword
-exe 'hi Special guifg='s:fg
-exe 'hi SpecialKey guifg='s:fg2' guibg='s:bg2
-exe 'hi Statement guifg='s:keyword
-exe 'hi StorageClass guifg='s:type'  gui=italic'
-exe 'hi String guifg='s:str
-exe 'hi Tag guifg='s:keyword
-exe 'hi Title guifg='s:fg'  gui=bold'
-exe 'hi Todo guifg='s:fg2'  gui=inverse,bold'
-exe 'hi Type guifg='s:type
-exe 'hi Underlined   gui=underline'
+    if !empty(a:fg)
+        exec 'hi ' . a:group . ' guifg=' . a:fg
+    endif
+    if !empty(a:bg)
+        exec 'hi ' . a:group . ' guibg=' . a:bg
+    endif
+    if !empty(a:attr)
+        exec 'hi ' . a:group . ' gui=' . l:attr . ' cterm=' . l:attr
+    endif
+endfun
 
-" Neovim Terminal Mode
-let g:terminal_color_0 = s:bg
-let g:terminal_color_1 = s:warning
-let g:terminal_color_2 = s:keyword
-let g:terminal_color_3 = s:bg4
-let g:terminal_color_4 = s:func
-let g:terminal_color_5 = s:builtin
-let g:terminal_color_6 = s:fg3
-let g:terminal_color_7 = s:str
-let g:terminal_color_8 = s:bg2
-let g:terminal_color_9 = s:warning2
-let g:terminal_color_10 = s:fg2
-let g:terminal_color_11 = s:var
-let g:terminal_color_12 = s:type
-let g:terminal_color_13 = s:const
-let g:terminal_color_14 = s:fg4
-let g:terminal_color_15 = s:comment
+" Editor Highlights
+call s:HL('ColorColumn',                    '',         s:gray4,    '')
+call s:HL('Cursor',                         s:gray2,    s:gray5,    '')
+call s:HL('CursorColumn',                   '',         s:gray2,    '')
+call s:HL('CursorLine',                     '',         s:gray2,    'none')
+call s:HL('Directory',                      s:blue,     '',         '')
+call s:HL('DiffAdd',                        s:gray3,    s:green,    'none')
+call s:HL('DiffChange',                     s:gray3,    s:yellow,   'none')
+call s:HL('DiffDelete',                     s:gray3,    s:red,      'none')
+call s:HL('DiffText',                       s:gray3,    s:blue,     'none')
+call s:HL('ErrorMsg',                       s:red,      s:gray1,    'bold')
+call s:HL('VertSplit',                      s:gray4,    s:gray1,    'none')
+call s:HL('Folded',                         s:gray3,    s:gray1,    '')
+call s:HL('FoldColumn',                     s:cyan,     s:gray1,    '')
+call s:HL('SignColumn',                     s:gray2,    s:gray1,    '')
+call s:HL('LineNr',                         s:gray3,    '',         '')
+call s:HL('CursorLineNr',                   s:gray5,    s:gray2,    'none')
+call s:HL('MatchParen',                     s:gray2,    s:pink,     'bold')
+call s:HL('ModeMsg',                        s:green,    '',         '')
+call s:HL('MoreMsg',                        s:green,    '',         '')
+call s:HL('NonText',                        s:gray4,    '',         '')
+call s:HL('Normal',                         s:gray5,    s:gray1,    'none')
+call s:HL('Pmenu',                          s:gray5,    s:gray3,    '')
+call s:HL('PmenuSel',                       s:gray2,    s:blue,     '')
+call s:HL('PmenuSbar',                      s:gray3,    s:gray4,    '')
+call s:HL('PmenuThumb',                     s:gray4,    s:gray5,    '')
+call s:HL('Question',                       s:green,    '',         '')
+call s:HL('Search',                         s:gray1,    s:yellow,   '')
+call s:HL('SpecialKey',                     s:gray4,    '',         '')
+call s:HL('SpellCap',                       s:blue,     '',         'undercurl')
+call s:HL('SpellBad',                       s:red,      '',         'undercurl')
+call s:HL('StatusLine',                     s:gray5,    s:gray3,    'none')
+call s:HL('StatusLineNC',                   s:gray2,    s:gray4,    '')
+call s:HL('TabLine',                        s:gray3,    s:gray1,    'none')
+call s:HL('TabLineFill',                    s:gray4,    s:gray2,    'none')
+call s:HL('TabLineSel',                     s:gray2,    s:gray4,    '')
+call s:HL('Title',                          s:yellow,   '',         'none')
+call s:HL('Visual',                         s:gray5,    s:gray3,    '')
+call s:HL('WarningMsg',                     s:red,      '',         '')
+call s:HL('WildMenu',                       s:gray2,    s:blue,     '')
 
-" Ruby Highlighting
-exe 'hi rubyAttribute guifg='s:builtin
-exe 'hi rubyLocalVariableOrMethod guifg='s:var
-exe 'hi rubyGlobalVariable guifg='s:var' gui=italic'
-exe 'hi rubyInstanceVariable guifg='s:var
-exe 'hi rubyKeyword guifg='s:keyword
-exe 'hi rubyKeywordAsMethod guifg='s:keyword' gui=bold'
-exe 'hi rubyClassDeclaration guifg='s:keyword' gui=bold'
-exe 'hi rubyClass guifg='s:keyword' gui=bold'
-exe 'hi rubyNumber guifg='s:const
+" Standard Syntax
+call s:HL('Comment',                        s:gray4,    '',         'italic')
+call s:HL('Constant',                       s:red,      '',         '')
+call s:HL('String',                         s:green,    '',         '')
+call s:HL('Character',                      s:green,    '',         '')
+call s:HL('Identifier',                     s:purple,   '',         'none')
+call s:HL('Function',                       s:yellow,   '',         '')
+call s:HL('Statement',                      s:blue,     '',         'none')
+call s:HL('Operator',                       s:cyan,     '',         'none')
+call s:HL('PreProc',                        s:cyan,     '',         '')
+call s:HL('Define',                         s:blue,     '',         '')
+call s:HL('Macro',                          s:blue,     '',         '')
+call s:HL('Type',                           s:orange,   '',         'none')
+call s:HL('Structure',                      s:blue,     '',         '')
+call s:HL('Special',                        s:cyan,     '',         '')
+call s:HL('Underlined',                     s:blue,     '',         'none')
+call s:HL('Error',                          s:red,      s:gray1,    'bold')
+call s:HL('Todo',                           s:pink,     s:gray1,    'bold')
 
-" Python Highlighting
-exe 'hi pythonBuiltinFunc guifg='s:builtin
+" CSS/Sass/Less
+call s:HL('cssAttrComma',                   s:green,    '',         '')
+call s:HL('cssAttributeSelector',           s:green,    '',         '')
+call s:HL('cssBraces',                      s:gray5,    '',         '')
+call s:HL('cssClassName',                   s:orange,   '',         '')
+call s:HL('cssClassNameDot',                s:orange,   '',         '')
+call s:HL('cssIdentifier',                  s:yellow,   '',         '')
+call s:HL('cssImportant',                   s:purple,   '',         '')
+call s:HL('cssMediaType',                   s:purple,   '',         '')
+call s:HL('cssProp',                        s:gray5,    '',         '')
+call s:HL('cssSelectorOp',                  s:blue,     '',         '')
+call s:HL('cssSelectorOp2',                 s:blue,     '',         '')
 
-" Go Highlighting
-exe 'hi goBuiltins guifg='s:builtin
-let g:go_highlight_array_whitespace_error = 1
-let g:go_highlight_build_constraints      = 1
-let g:go_highlight_chan_whitespace_error  = 1
-let g:go_highlight_extra_types            = 1
-let g:go_highlight_fields                 = 1
-let g:go_highlight_format_strings         = 1
-let g:go_highlight_function_calls         = 1
-let g:go_highlight_function_parameters    = 1
-let g:go_highlight_functions              = 1
-let g:go_highlight_generate_tags          = 1
-let g:go_highlight_operators              = 1
-let g:go_highlight_space_tab_error        = 1
-let g:go_highlight_string_spellcheck      = 1
-let g:go_highlight_types                  = 1
-let g:go_highlight_variable_assignments   = 1
-let g:go_highlight_variable_declarations  = 1
+call s:HL('sassAmpersand',                  s:blue,     '',         '')
+call s:HL('sassClass',                      s:orange,   '',         '')
+call s:HL('sassClassChar',                  s:orange,   '',         '')
 
-" Javascript Highlighting
-exe 'hi jsBuiltins guifg='s:builtin
-exe 'hi jsFunction guifg='s:keyword' gui=bold'
-exe 'hi jsGlobalObjects guifg='s:type
-exe 'hi jsAssignmentExps guifg='s:var
+call s:HL('lessAmpersand',                  s:blue,     '',         '')
+call s:HL('lessClass',                      s:orange,   '',         '')
+call s:HL('lessClassChar',                  s:orange,   '',         '')
+call s:HL('lessFunction',                   s:yellow,   '',         '')
+call s:HL('lessCssAttribute',               s:gray5,    '',         '')
 
-" Html Highlighting
-exe 'hi htmlLink guifg='s:var' gui=underline'
-exe 'hi htmlStatement guifg='s:keyword
-exe 'hi htmlSpecialTagName guifg='s:keyword
+" Git
+call s:HL('gitcommitComment',               s:gray4,    '',         'italic')
+call s:HL('gitcommitOnBranch',              s:gray4,    '',         'italic')
+call s:HL('gitcommitFile',                  s:cyan,     '',         '')
+call s:HL('gitcommitHeader',                s:purple,   '',         '')
+call s:HL('gitcommitBranch',                s:orange,   '',         '')
+call s:HL('gitcommitUnmerged',              s:green,    '',         '')
+call s:HL('gitcommitUntrackedFile',         s:cyan,     '',         '')
+call s:HL('gitcommitSelectedFile',          s:green,    '',         '')
+call s:HL('gitcommitDiscardedFile',         s:red,      '',         '')
+call s:HL('gitcommitUnmergedFile',          s:yellow,   '',         '')
+call s:HL('gitcommitSelectedType',          s:green,    '',         '')
+call s:HL('gitcommitDiscardedType',         s:red,      '',         '')
+hi link gitcommitNoBranch       gitcommitBranch
+hi link gitcommitUntracked      gitcommitComment
+hi link gitcommitDiscarded      gitcommitComment
+hi link gitcommitSelected       gitcommitComment
+hi link gitcommitDiscardedArrow gitcommitDiscardedFile
+hi link gitcommitSelectedArrow  gitcommitSelectedFile
+hi link gitcommitUnmergedArrow  gitcommitUnmergedFile
 
-" Markdown Highlighting
-exe 'hi mkdCode guifg='s:builtin
+" HTML
+call s:HL('htmlArg',                        s:yellow,   '',         '')
+call s:HL('htmlEndTag',                     s:purple,   '',         '')
+call s:HL('htmlTag',                        s:purple,   '',         '')
+call s:HL('htmlTagName',                    s:blue,     '',         '')
+call s:HL('htmlTitle',                      s:gray5,    '',         '')
 
+" Javascript
+call s:HL('javaScriptBraces',               s:gray5,    '',         '')
+call s:HL('javaScriptIdentifier',           s:blue,     '',         '')
+call s:HL('javaScriptFunction',             s:blue,     '',         '')
+call s:HL('javaScriptNumber',               s:red,      '',         '')
+call s:HL('javaScriptReserved',             s:blue,     '',         '')
+call s:HL('javaScriptRequire',              s:cyan,     '',         '')
+call s:HL('javaScriptNull',                 s:red,      '',         '')
 
+" Ruby
+call s:HL('rubyBlockParameterList',         s:purple,   '',         '')
+call s:HL('rubyInterpolationDelimiter',     s:purple,   '',         '')
+call s:HL('rubyStringDelimiter',            s:green,    '',         '')
+call s:HL('rubyRegexpSpecial',              s:cyan,     '',         '')
 
+" Vim-Fugitive
+call s:HL('diffAdded',                      s:green,    '',         '')
+call s:HL('diffRemoved',                    s:red,      '',         '')
+
+" Vim-Gittgutter
+hi link GitGutterAdd    SignifySignAdd
+hi link GitGutterChange SignifySignChange
+hi link GitGutterDelete SignifySignDelete
+call s:HL('GitGutterChangeDelete',          s:orange,   '',         '')
+
+" Vim-Signify
+call s:HL('SignifySignAdd',                 s:green,    '',         '')
+call s:HL('SignifySignChange',              s:yellow,   '',         '')
+call s:HL('SignifySignDelete',              s:red,      '',         '')

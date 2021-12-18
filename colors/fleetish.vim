@@ -1,5 +1,6 @@
 " Vim color file
-" fleet
+" fleetish
+" A theme based on a screenshot of JetBrains Fleet. May or may not be accurate
 
 hi clear
 
@@ -8,7 +9,7 @@ syntax reset
 endif
 
 set t_Co=256
-let g:colors_name = "fleet"
+let g:colors_name = "fleetish"
 
 
 " Define reusable colorvariables.
